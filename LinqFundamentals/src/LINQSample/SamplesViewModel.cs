@@ -42,7 +42,6 @@ namespace LINQSample
         }
         #endregion
 
-
         #region GetSingleColumnMethod
         public List<string> GetSingleColumnMethod()
         {
@@ -94,7 +93,7 @@ namespace LINQSample
         public string AnonymousClassQuery()
         {
             List<Product> products = GetProducts();
-            StringBuilder sb = new (2048);
+            StringBuilder sb = new(2048);
 
             var list = (from prod in products
                         select new
@@ -104,7 +103,7 @@ namespace LINQSample
                             ProductSize = prod.Size
                         });
 
-            foreach ( var prod in list )
+            foreach (var prod in list)
             {
                 sb.AppendLine($"Product ID: {prod.Identifier}");
                 sb.AppendLine($" Product Name: {prod.ProductName}");
@@ -119,14 +118,14 @@ namespace LINQSample
         public string AnonymousClassMethod()
         {
             List<Product> products = GetProducts();
-            StringBuilder sb = new (2048);
+            StringBuilder sb = new(2048);
 
-            var list = products.Select(prod => 
-                new { 
+            var list = products.Select(prod =>
+                new {
                     Identifier = prod.ProductId,
                     ProductName = prod.Name,
                     ProductSize = prod.Size
-            }).ToList();
+                }).ToList();
 
             foreach (var prod in list)
             {
@@ -138,6 +137,84 @@ namespace LINQSample
             return sb.ToString();
         }
 
+        #endregion
+
+        #region OrderByQuery
+        public List<Product> OrderByQuery()
+        {
+            List<Product> products = GetProducts();
+            List<Product> list = new();
+
+            list = (from prod in products
+                    orderby prod.Name
+                    select prod).ToList();
+
+            return list;
+        }
+        #endregion
+
+        #region OrderByMethod
+        public List<Product> OrderByMethod()
+        {
+            List<Product> products = GetProducts();
+            List<Product> list = new();
+
+            list = products.OrderBy(prod => prod.Name).ToList();
+
+            return list;
+        }
+        #endregion
+
+        #region OrderByDescendingQuery
+        public List<Product> OrderByDescendingQuery()
+        {
+            List<Product> products = GetProducts();
+            List<Product> list = new();
+
+            list = (from prod in products
+                    orderby prod.Name descending
+                    select prod).ToList();
+
+            return list;
+        }
+        #endregion
+
+        #region OrderByDescendingMethod
+        public List<Product> OrderByDescendingMethod()
+        {
+            List<Product> products = GetProducts();
+            List<Product> list = new();
+
+            list = products.OrderByDescending(prod => prod.Name).ToList();
+
+            return list;
+        }
+        #endregion
+
+        #region OrderByTwoFieldsQuery
+        public List<Product> OrderByTwoFieldsQuery()
+        {
+            List<Product> products = GetProducts();
+            List<Product> list = new();
+
+            list = (from prod in products
+                    orderby prod.Color, prod.Name ascending
+                    select prod).ToList();
+
+            return list;
+        }
+        #endregion
+
+        #region OrderByTwoFieldsMethod
+        public List<Product> OrderByTwoFieldsMethod()
+        {
+            List<Product> products = GetProducts();
+            List<Product> list = new();
+
+            list = products.OrderBy(prod => prod.Color).ThenBy(prod => prod.Name).ToList();
+
+            return list;
+        }
         #endregion
     }
 }
