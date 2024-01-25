@@ -4,6 +4,6 @@ Console.WriteLine("Hello, World!");
 
 SamplesViewModel vw = new();
 
-var result = vw.AnonymousClassMethod();
+var result = vw.OrderByDescendingQuery();
 
 vw.Display(result);
